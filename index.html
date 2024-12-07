@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive JavaScript Activity</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        header img {
+            height: 60px;
+            margin-right: 15px;
+        }
+        .motorcycle {
+            width: 300px;
+            height: 150px;
+            margin: 20px auto;
+            background-color: white;
+            border: 2px solid black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.5s ease, transform 0.5s ease;
+        }
+        .motorcycle:hover {
+            transform: scale(1.05);
+        }
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        input, select, button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 14px;
+        }
+        button {
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #results {
+            margin-top: 20px;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo.png" alt="Logo">
+    </header>
+
+    <div class="section" id="colorGeneratorSection">
+        <h2>Motorcycle Color Generator</h2>
+        <div class="motorcycle" id="motorcycle">
+            <img src="motor.png" alt="Motorcycle" id="motorcycleImage" style="width:100%; height:100%;">
+        </div>
+        <select id="colorDropdown">
+            <option value="">Select a Color</option>
+            <option value="blue">Blue</option>
+            <option value="grey">Grey</option>
+            <option value="green">Green</option>
+            <option value="yellow">Yellow</option>
+            <option value="lightblue">Light Blue</option>
+            <option value="black">Black</option>
+        </select>
+        <br><br>
+        <button id="randomColorButton">Generate Random Color</button>
+        <button id="resetButton">Reset</button>
+    </div>
+
+    <div class="section" id="gradeEvaluatorSection">
+        <h2>Student Grade Evaluator</h2>
+        <form id="gradeForm">
+            <label>Full Name:</label>
+            <input type="text" id="fullName" required>
+            <br>
+            <label>Math:</label>
+            <input type="number" id="mathGrade" min="0" max="100" required>
+            <label>Science:</label>
+            <input type="number" id="scienceGrade" min="0" max="100" required>
+            <label>English:</label>
+            <input type="number" id="englishGrade" min="0" max="100" required>
+            <label>Filipino:</label>
+            <input type="number" id="filipinoGrade" min="0" max="100" required>
+            <label>P.E.:</label>
+            <input type="number" id="peGrade" min="0" max="100" required>
+            <br><br>
+            <button type="button" id="evaluateButton">Evaluate Grades</button>
+        </form>
+        <div id="results"></div>
+    </div>
+
+    <div class="section" id="jsChallengesSection">
+        <h2>Native JavaScript Challenges</h2>
+        <h3>FizzBuzz</h3>
+        <button id="fizzBuzzButton">Run FizzBuzz</button>
+        <pre id="fizzBuzzResult"></pre>
+        <h3>99 Bottles of Beer</h3>
+        <button id="bottlesButton">Show 99 Bottles Lyrics</button>
+        <pre id="bottlesResult"></pre>
+        <h3>Fibonacci Sequence</h3>
+        <label>Number of Terms:</label>
+        <input type="number" id="fibonacciTerms" min="1">
+        <button id="fibonacciButton">Generate Fibonacci</button>
+        <pre id="fibonacciResult"></pre>
+    </div>
+
+    <script>
+        const motorcycle = document.getElementById('motorcycle');
+        const colorDropdown = document.getElementById('colorDropdown');
+        const randomColorButton = document.getElementById('randomColorButton');
+        const resetButton = document.getElementById('resetButton');
+
+        randomColorButton.addEventListener('click', () => {
+            const randomColor = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+            motorcycle.style.backgroundColor = randomColor;
+        });
+
+        colorDropdown.addEventListener('change', () => {
+            motorcycle.style.backgroundColor = colorDropdown.value;
+        });
+
+        resetButton.addEventListener('click', () => {
+            motorcycle.style.backgroundColor = 'white';
+        });
+
+        const evaluateButton = document.getElementById('evaluateButton');
+        const resultsDiv = document.getElementById('results');
+
+        evaluateButton.addEventListener('click', () => {
+            const fullName = document.getElementById('fullName').value;
+            const grades = [
+                parseInt(document.getElementById('mathGrade').value),
+                parseInt(document.getElementById('scienceGrade').value),
+                parseInt(document.getElementById('englishGrade').value),
+                parseInt(document.getElementById('filipinoGrade').value),
+                parseInt(document.getElementById('peGrade').value),
+            ];
+
+            if (grades.some(grade => grade < 0 || grade > 100)) {
+                resultsDiv.textContent = 'Please enter grades between 0 and 100.';
+                return;
+            }
+
+            const evaluations = grades.map(grade => {
+                if (grade >= 90) return 'Excellent';
+                if (grade >= 80) return 'Good';
+                if (grade >= 70) return 'Average';
+                if (grade >= 60) return 'Poor';
+                return 'Fail';
+            });
+
+            const excellentCount = evaluations.filter(e => e === 'Excellent').length;
+            const poorFailCount = evaluations.filter(e => e === 'Poor' || e === 'Fail').length;
+
+            let ranking = '';
+            if (excellentCount === 5) {
+                ranking = 'Top Honor Student';
+            } else if (excellentCount >= 3) {
+                ranking = 'Second Honorable Student';
+            } else if (poorFailCount === 5) {
+                ranking = 'Repeater';
+            } else {
+                ranking = 'Average Performer';
+            }
+
+            resultsDiv.innerHTML = `
+                <p><strong>Name:</strong> ${fullName}</p>
+                <p><strong>Grades:</strong> ${grades.join(', ')}</p>
+                <p><strong>Evaluations:</strong> ${evaluations.join(', ')}</p>
+                <p><strong>Ranking:</strong> ${ranking}</p>
+            `;
+        });
+
+        const fizzBuzzButton = document.getElementById('fizzBuzzButton');
+        const fizzBuzzResult = document.getElementById('fizzBuzzResult');
+
+        fizzBuzzButton.addEventListener('click', () => {
+            let output = '';
+            for (let i = 1; i <= 100; i++) {
+                if (i % 15 === 0) output += 'FizzBuzz\n';
+                else if (i % 3 === 0) output += 'Fizz\n';
+                else if (i % 5 === 0) output += 'Buzz\n';
+                else output += `${i}\n`;
+            }
+            fizzBuzzResult.textContent = output;
+        });
+
+        const bottlesButton = document.getElementById('bottlesButton');
+        const bottlesResult = document.getElementById('bottlesResult');
+
+        bottlesButton.addEventListener('click', () => {
+            let output = '';
+            for (let i = 99; i > 0; i--) {
+                output += `${i} bottle${i === 1 ? '' : 's'} of beer on the wall, ${i} bottle${i === 1 ? '' : 's'} of beer.\n`;
+                output += `Take one down and pass it around, ${i - 1 > 0 ? i - 1 : 'no more'} bottle${i - 1 === 1 ? '' : 's'} of beer on the wall.\n\n`;
+            }
+            output += 'No more bottles of beer on the wall, no more bottles of beer.\nGo to the store and buy some more, 99 bottles of beer on the wall.\n';
+            bottlesResult.textContent = output;
+        });
+
+        const fibonacciButton = document.getElementById('fibonacciButton');
+        const fibonacciTerms = document.getElementById('fibonacciTerms');
+        const fibonacciResult = document.getElementById('fibonacciResult');
+
+        fibonacciButton.addEventListener('click', () => {
+            const terms = parseInt(fibonacciTerms.value);
+            if (terms < 1) {
+                fibonacciResult.textContent = 'Please enter a positive number of terms.';
+                return;
+            }
+            const sequence = [0, 1];
+            while (sequence.length < terms) {
+                const last = sequence[sequence.length - 1];
+                const secondLast = sequence[sequence.length - 2];
+                sequence.push(last + secondLast);
+            }
+            fibonacciResult.textContent = sequence.slice(0, terms).join(', ');
+        });
+    </script>
+</body>
+</html>
